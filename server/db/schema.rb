@@ -10,10 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_31_144652) do
+ActiveRecord::Schema.define(version: 2022_05_31_191110) do
 
   create_table "buyers", force: :cascade do |t|
     t.string "name"
+    t.string "username"
+    t.string "password"
   end
 
   create_table "products", force: :cascade do |t|
@@ -29,6 +31,8 @@ ActiveRecord::Schema.define(version: 2022_05_31_144652) do
   create_table "sellers", force: :cascade do |t|
     t.string "name"
     t.integer "balance"
+    t.string "username"
+    t.string "password"
   end
 
 end

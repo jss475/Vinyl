@@ -1,23 +1,206 @@
 import logo from './logo.svg';
+import React, {useEffect, useState} from 'react'
+import SignInSeller from './SignInSeller'
+import SignInBuyer from './SignInBuyer'
+import SignUpSeller from './SignUpSeller'
+import SignUpBuyer from './SignUpBuyer'
+import NavbarComponent from './NavbarComponent'
+import "bootstrap/dist/css/bootstrap.min.css";
+import Home from './Home'
+import { Switch, Route, BrowserRouter, Link, useHistory } from "react-router-dom";
 import './App.css';
 
+
+
+
 function App() {
+  
+  const [allProducts, setAllProducts] = useState([])
+  const [allSellers, setAllSellers] = useState([])
+  const [allBuyers, setAllBuyers] = useState([])
+
+  //sign in msg
+  const [signInMsg, setSignInMsg] = useState()
+
+  //who signed in as buyer
+  const [signedInBuyer, setSignedInBuyer] = useState(false)
+  //who signed in as seller
+  const [signedInSeller, setSignedInSeller] = useState(false)
+
+  //fetch product data
+  useEffect(()=> {
+    fetch('http://localhost:9292/products')
+      .then(res => res.json())
+      .then(data => setAllProducts(data))
+  },[])
+
+  //fetch seller data
+  useEffect(()=> {
+    fetch('http://localhost:9292/sellers')
+      .then(res => res.json())
+      .then(data => setAllSellers(data))
+  },[])
+
+  //fetch buyer data
+  useEffect(()=> {
+    fetch('http://localhost:9292/buyers')
+      .then(res => res.json())
+      .then(data => setAllBuyers(data))
+  },[])
+
+
+  //handle signupbuyer event
+  function handleSignUpBuyer(e){
+    e.preventDefault() //don't reset the form on submit
+
+    //create configObj to POST the new buyer
+    let configObj = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: e.target.username.value,
+        password: e.target.password.value,
+        name: e.target.name.value
+      }
+      )
+    }
+    //update server for new buyer
+    fetch('http://localhost:9292/buyers', configObj)
+      .then(res => res.json())
+      .then(data => setAllBuyers([...allBuyers,data]))
+
+      document.querySelector('#sign_up_buyer_form').reset()
+  }
+
+  //handle signupseller event
+  function handleSignUpSeller(e) {
+    e.preventDefault() //don't reset the form on submit
+
+    //create configObj to POST the new seller
+    let configObj = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: e.target.username.value,
+        password: e.target.password.value,
+        name: e.target.name.value,
+        balance: 0
+      }
+      )
+    }
+
+    //update server for new seller
+    fetch('http://localhost:9292/sellers', configObj)
+      .then(res => res.json())
+      .then(data => setAllSellers([...allSellers,data]))
+
+    document.querySelector('#sign_up_seller_form').reset()
+  }
+
+  //handle signinbuyer event
+  function handleSignInBuyer(e){
+    e.preventDefault()
+    if (e.target.password.value === "" && e.target.username.value === "") {
+      setSignInMsg("Please Fill Out Your Username and Password!");
+    } else if (e.target.password.value === "") {
+      setSignInMsg("Please Fill Out Your Password");
+    } else if (e.target.username.value === "") {
+      setSignInMsg("Please Fill Out Your Username");
+    } else {
+      
+      //filter out the users that are signed in
+      let filteredBuyer = allBuyers.filter((buyer) => {
+        if (
+          buyer.username === e.target.username.value &&
+          buyer.password === e.target.password.value
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+        if(!filteredBuyer.length){
+          setSignInMsg("Your Username and Password Are Not In The System")
+        }else {
+          setSignInMsg("Success!")
+          //set who signed in
+          setSignedInBuyer(filteredBuyer[0])
+          //local storage of username
+          localStorage.setItem("username", e.target.username.value);
+        }
+      }
+  }
+
+  //handle signinseller event
+  function handleSignInSeller(e){
+    debugger
+    e.preventDefault()
+    if (e.target.password.value === "" && e.target.username.value === "") {
+      setSignInMsg("Please Fill Out Your Username and Password!");
+    } else if (e.target.password.value === "") {
+      setSignInMsg("Please Fill Out Your Password");
+    } else if (e.target.username.value === "") {
+      setSignInMsg("Please Fill Out Your Username");
+    } else {
+      
+      //filter out the users that are signed in
+      let filteredSeller = allSellers.filter((seller) => {
+        if (
+          seller.username === e.target.username.value &&
+          seller.password === e.target.password.value
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+        if(!filteredSeller.length){
+          setSignInMsg("Your Username and Password Are Not In The System")
+        }else {
+          setSignInMsg("Success!")
+          //set who signed in
+          setSignedInSeller(filteredSeller[0])
+          //local storage of username
+          localStorage.setItem("username", e.target.username.value);
+        }
+      }
+  }
+
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavbarComponent/>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/signin/seller">
+            <SignInSeller handleSignInSeller={handleSignInSeller}
+            signInMsg={signInMsg}/>
+          </Route>
+          <Route path="/signin/buyer">
+            <SignInBuyer handleSignInBuyer={handleSignInBuyer}
+            signInMsg={signInMsg}
+            />
+          </Route>
+          <Route path="/signup/seller">
+            <SignUpSeller handleSignUpSeller={handleSignUpSeller}/>
+          </Route>
+          <Route path="/signup/buyer" >
+            <SignUpBuyer handleSignUpBuyer={handleSignUpBuyer}/>
+          </Route>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="*">
+            <h1>404 not found</h1>
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
