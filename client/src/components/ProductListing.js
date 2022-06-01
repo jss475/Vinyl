@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-function ProductListing({ allProducts, signedInSeller, handleDeleteItem, handleUpdateSubmit}) {
+function ProductListing({ allProducts, signedInSeller, handleDeleteItem, handleUpdateSubmit, handleUpdateItem, updatedClicked}) {
     const { id } = useParams()
     const [productListing, setProductListing] = useState([])
-    const [updatedClicked, setUpdatedClicked] = useState(false)
-
-    function handleUpdateItem(){
-        setUpdatedClicked(true)
-    }
 
     function getProductListingFetch() {
         fetch(`http://localhost:9292/products/${id}`)

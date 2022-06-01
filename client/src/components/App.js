@@ -324,8 +324,18 @@ function App() {
             }
           })
           console.log(newArray)
-          setAllProducts(newArray)})
+          setAllProducts(newArray)
+          setUpdatedClicked(false)}
+          )
     }
+
+    //handle true false ternary for showing the update form in ProductListing.js
+    const [updatedClicked, setUpdatedClicked] = useState(false)
+
+    function handleUpdateItem(){
+        setUpdatedClicked(true)
+    }
+
     
 
     return (
@@ -365,7 +375,9 @@ function App() {
             <AddListing signedInSeller={signedInSeller} handleAddListing={handleAddListing}  />
           </Route>
           <Route path='/products/:id'>
-            <ProductListing allProducts={allProducts} allSellers={allSellers} signedInSeller={signedInSeller} handleDeleteItem={handleDeleteItem} handleUpdateItem={handleUpdateItem} handleUpdateSubmit={handleUpdateSubmit}/>
+            <ProductListing allProducts={allProducts} allSellers={allSellers} signedInSeller={signedInSeller} handleDeleteItem={handleDeleteItem} handleUpdateItem={handleUpdateItem} handleUpdateSubmit={handleUpdateSubmit}
+            updatedClicked={updatedClicked}
+            />
           </Route>
           <Route exact path="/">
             <Home />
