@@ -4,6 +4,7 @@ import SignInSeller from './SignInSeller'
 import SignInBuyer from './SignInBuyer'
 import SignUpSeller from './SignUpSeller'
 import SignUpBuyer from './SignUpBuyer'
+import Logout from './Logout'
 import NavbarComponent from './NavbarComponent'
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from './Home'
@@ -23,9 +24,9 @@ function App() {
   const [signInMsg, setSignInMsg] = useState()
 
   //who signed in as buyer
-  const [signedInBuyer, setSignedInBuyer] = useState(false)
+  const [signedInBuyer, setSignedInBuyer] = useState([])
   //who signed in as seller
-  const [signedInSeller, setSignedInSeller] = useState(false)
+  const [signedInSeller, setSignedInSeller] = useState([])
 
   //fetch product data
   useEffect(()=> {
@@ -53,53 +54,99 @@ function App() {
   function handleSignUpBuyer(e){
     e.preventDefault() //don't reset the form on submit
 
-    //create configObj to POST the new buyer
-    let configObj = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: e.target.username.value,
-        password: e.target.password.value,
-        name: e.target.name.value
-      }
-      )
-    }
-    //update server for new buyer
-    fetch('http://localhost:9292/buyers', configObj)
-      .then(res => res.json())
-      .then(data => setAllBuyers([...allBuyers,data]))
+    if (e.target.password.value === "" && e.target.username.value === "") {
+      setSignInMsg("Please Fill Out Your Username and Password!");
+    } else if (e.target.password.value === "") {
+      setSignInMsg("Please Fill Out Your Password");
+    } else if (e.target.username.value === "") {
+      setSignInMsg("Please Fill Out Your Username");
+    } else {
 
-      document.querySelector('#sign_up_buyer_form').reset()
-  }
+      //filter out the buyers that have the same username
+      let filteredBuyer = allBuyers.filter((buyer) => {
+        if (buyer.username === e.target.username.value) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      debugger
+
+      if(filteredBuyer.length){
+        setSignInMsg("Your username has already been taken!")
+      }else{
+        //create configObj to POST the new buyer
+        let configObj = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: e.target.username.value,
+            password: e.target.password.value,
+            name: e.target.name.value
+          }
+          )
+        }
+        //update server for new buyer
+        fetch('http://localhost:9292/buyers', configObj)
+          .then(res => res.json())
+          .then(data => setAllBuyers([...allBuyers,data]))
+
+          document.querySelector('#sign_up_buyer_form').reset()
+        }
+      }
+    }
 
   //handle signupseller event
   function handleSignUpSeller(e) {
     e.preventDefault() //don't reset the form on submit
+    
+    if (e.target.password.value === "" && e.target.username.value === "") {
+      setSignInMsg("Please Fill Out Your Username and Password!");
+    } else if (e.target.password.value === "") {
+      setSignInMsg("Please Fill Out Your Password");
+    } else if (e.target.username.value === "") {
+      setSignInMsg("Please Fill Out Your Username");
+    } else {
 
-    //create configObj to POST the new seller
-    let configObj = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: e.target.username.value,
-        password: e.target.password.value,
-        name: e.target.name.value,
-        balance: 0
-      }
-      )
+      //filter out the sellers that have the same username
+      let filteredSeller = allSellers.filter((seller) => {
+        if (seller.username === e.target.username.value) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    
+
+      if(!filteredSeller.length){
+        setSignInMsg("Your username has already been taken!")
+      }else{
+        //create configObj to POST the new seller
+        let configObj = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: e.target.username.value,
+            password: e.target.password.value,
+            name: e.target.name.value,
+            balance: 0
+          })
+        }
+        //update server for new seller
+        fetch('http://localhost:9292/sellers', configObj)
+        .then(res => res.json())
+        .then(data => setAllSellers([...allSellers,data]))
+
+        document.querySelector('#sign_up_seller_form').reset()
     }
-
-    //update server for new seller
-    fetch('http://localhost:9292/sellers', configObj)
-      .then(res => res.json())
-      .then(data => setAllSellers([...allSellers,data]))
-
-    document.querySelector('#sign_up_seller_form').reset()
   }
+}
+
+
 
   //handle signinbuyer event
   function handleSignInBuyer(e){
@@ -123,22 +170,24 @@ function App() {
           return false;
         }
       });
-
+        debugger
         if(!filteredBuyer.length){
           setSignInMsg("Your Username and Password Are Not In The System")
         }else {
           setSignInMsg("Success!")
           //set who signed in
-          setSignedInBuyer(filteredBuyer[0])
+          setSignedInBuyer(filteredBuyer)
           //local storage of username
           localStorage.setItem("username", e.target.username.value);
         }
       }
-  }
+      document.querySelector('#sign_in_buyer_form').reset()
+    }
+    
+  
 
   //handle signinseller event
   function handleSignInSeller(e){
-    debugger
     e.preventDefault()
     if (e.target.password.value === "" && e.target.username.value === "") {
       setSignInMsg("Please Fill Out Your Username and Password!");
@@ -165,17 +214,30 @@ function App() {
         }else {
           setSignInMsg("Success!")
           //set who signed in
-          setSignedInSeller(filteredSeller[0])
+          setSignedInSeller(filteredSeller)
           //local storage of username
           localStorage.setItem("username", e.target.username.value);
         }
       }
+      document.querySelector('#sign_in_seller_form').reset()
+  }
+
+  //handle logout event
+  function handleLogout() {
+    debugger
+    if(signedInSeller.length==false && signedInBuyer.length == true){
+      setSignedInBuyer([])
+      localStorage.setItem("username",'')
+    }else if(signedInSeller.length == true && signedInBuyer.length ==false){
+      setSignedInSeller([])
+      localStorage.setItem("username",'')
+    }
   }
 
   
   return (
     <div className="App">
-      <NavbarComponent/>
+      <NavbarComponent handleLogout={handleLogout}/>
       <BrowserRouter>
         <Switch>
           <Route path="/signin/seller">
@@ -188,10 +250,17 @@ function App() {
             />
           </Route>
           <Route path="/signup/seller">
-            <SignUpSeller handleSignUpSeller={handleSignUpSeller}/>
+            <SignUpSeller handleSignUpSeller={handleSignUpSeller}
+            signInMsg={signInMsg}
+            />
           </Route>
           <Route path="/signup/buyer" >
-            <SignUpBuyer handleSignUpBuyer={handleSignUpBuyer}/>
+            <SignUpBuyer handleSignUpBuyer={handleSignUpBuyer}
+            signInMsg={signInMsg}
+            />
+          </Route>
+          <Route path="/logout">
+            <Logout handleLogout={handleLogout}/>
           </Route>
           <Route exact path="/">
             <Home />

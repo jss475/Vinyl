@@ -1,6 +1,6 @@
 import React from 'react'
 
-function SignUpBuyer({handleSignUpBuyer}){
+function SignUpBuyer({handleSignUpBuyer, signInMsg}){
     return (
         <div id="sign_up_buyer_bg">
           <div className="loginbox">
@@ -29,7 +29,7 @@ function SignUpBuyer({handleSignUpBuyer}){
               <button type="submit">Submit</button>
               <br />
               <br />
-              {/* <em>{signInMsg}</em> */}
+              <em>{signInMsg}</em>
             </form>
           </div>
         </div>
