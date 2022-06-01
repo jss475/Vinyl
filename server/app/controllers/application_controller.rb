@@ -56,6 +56,11 @@ class ApplicationController < Sinatra::Base
         seller.to_json
     end
 
+    get '/buyers' do
+        buyer = Buyer.all
+        buyer.to_json
+    end
+
     post '/buyers' do
         new_buyer = Buyer.create(
             name: params[:name]
