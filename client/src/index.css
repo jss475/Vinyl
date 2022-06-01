@@ -65,3 +65,7 @@ code {
   height: calc(100% - 325px);
   height: 100vh;
 }
+
+.product-page {
+  justify-content: center;
+}
