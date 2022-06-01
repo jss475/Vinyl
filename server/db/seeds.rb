@@ -1,7 +1,9 @@
 puts "🌱 Seeding buyers..."
 3.times do 
     Buyer.create(
-        name: Faker::Name.name
+        name: Faker::Name.name,
+        username: Faker::Internet.username(specifier: 5..8),
+        password: Faker::Internet.password(min_length: 8)
     )
 end
 puts "Done seeding buyers!"
@@ -10,7 +12,9 @@ puts "🌱 Seeding sellers..."
 3.times do 
     Seller.create(
         name: Faker::Name.name,
-        balance: 0
+        balance: 0,
+        username: Faker::Internet.username(specifier: 5..8),
+        password: Faker::Internet.password(min_length: 8)
     )
 end
 puts "Done seeding sellers!"
