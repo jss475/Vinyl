@@ -69,3 +69,17 @@ code {
 .product-page {
   justify-content: center;
 }
+
+.product-listing {
+  align-items: center;
+}
+.listing-image {
+  height: 50%;
+  width: 50%;
+}
+
+.product-listing-info {
+  justify-self: baseline;
+  justify-content: center;
+}
+

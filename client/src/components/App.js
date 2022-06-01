@@ -235,6 +235,15 @@ function App() {
       localStorage.setItem("username",'')
     }
   }
+
+  function handleUpdateItem(item) {
+    console.log(item)
+  }
+
+  function handleDeleteItem(item) {
+    fetch(`http://localhost:9292${item.id}`,
+    {method: "DELETE"})
+  }
   
     // search bar functionality
     function handleSearch(e) {
@@ -311,8 +320,8 @@ function App() {
           <Route exact path = "/addlisting">
             <AddListing signedInSeller={signedInSeller} handleAddListing={handleAddListing}  />
           </Route>
-          <Route exact path='/products/:id'>
-            <ProductListing />
+          <Route path='/products/:id'>
+            <ProductListing products={allProducts} allSellers={allSellers} signedInSeller={signedInSeller} handleDeleteItem={handleDeleteItem} handleUpdateItem={handleUpdateItem} />
           </Route>
           <Route exact path="/">
             <Home />

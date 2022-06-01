@@ -22,6 +22,13 @@ class ApplicationController < Sinatra::Base
         new_prod.to_json
     end
 
+    get '/products/:id' do
+        prod = Product.find(params[:id])
+        seller_of_prod = prod.seller
+        combo = prod, seller_of_prod
+        combo.to_json
+    end
+
     patch '/products/:id' do
         prod = Product.find(params[:id])
         prod.update(
