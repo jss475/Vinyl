@@ -232,6 +232,7 @@ function App() {
       localStorage.setItem("username",'')
     }
   }
+  
     function handleSearch(e) {
       setSearched(e)
     }
@@ -239,10 +240,11 @@ function App() {
     const productsToDisplay = allProducts.filter((product) => 
       product.name.toLowerCase().includes(searched) || product.description.toLowerCase().includes(searched) ? true : false)
 
+    debugger
     return (
       <>
       {/* <div className='App'> */}
-        <NavBar handleSearch={handleSearch} />
+        <NavBar handleSearch={handleSearch} handleLogout={handleLogout}/>
         <Switch>
         <Route path="/signin/seller">
             <SignInSeller handleSignInSeller={handleSignInSeller}
@@ -263,11 +265,11 @@ function App() {
             signInMsg={signInMsg}
             />
           </Route>
-          <Route path="/logout">
+          {/* <Route path="/logout">
             <Logout handleLogout={handleLogout}/>
-          </Route>
+          </Route> */}
           <Route exact path='/Products'>
-            <Products products={productsToDisplay} />
+            <Products products={productsToDisplay} signedInBuyer={signedInBuyer} signedInSeller={signedInSeller}/>
           </Route>     
           <Route exact path="/">
             <Home />

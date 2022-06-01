@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import Search from './Search';
 import Logout from './Logout';
+import {Link} from 'react-router-dom'
 
 
 function NavBar( { handleSearch, handleLogout }) {
@@ -10,12 +11,12 @@ function NavBar( { handleSearch, handleLogout }) {
     <>
     <Navbar variant="transparent">
         <Container>
-        <Navbar.Brand href="/home">Test Name</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/home">Test Name</Navbar.Brand>
         <Nav className="me-auto">
-        <Nav.Link href="/">Home</Nav.Link>
-        <Nav.Link href="/products">Products</Nav.Link>
-        <Nav.Link href="/signin/buyer">Sign In</Nav.Link>
-        <Nav.Link href="/signup/buyer">Sign Up</Nav.Link>
+        <Nav.Link as={Link} to="/">Home</Nav.Link>
+        <Nav.Link as={Link} to="/products">Products</Nav.Link>
+        <Nav.Link as={Link} to="/signin/buyer">Sign In</Nav.Link>
+        <Nav.Link as={Link} to="/signup/buyer">Sign Up</Nav.Link>
         </Nav>
         </Container>
         <Logout handleLogout={handleLogout} />
