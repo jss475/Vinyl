@@ -266,7 +266,7 @@ function App() {
   }
 
     const productsToDisplay = allProducts.filter((product) => 
-      product.name.toLowerCase().includes(searched) || product.description.toLowerCase().includes(searched) ? true : false)
+      product.name.toLowerCase().includes(searched.toLowerCase()) || product.description.toLowerCase().includes(searched.toLowerCase()) ? true : false)
 
   //adding a new listing as a seller
   function handleAddListing(e){

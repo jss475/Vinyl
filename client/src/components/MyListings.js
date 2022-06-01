@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 function MyListings({ products, signedInSeller, handleProductClick }) {
 
     let filteredProducts = []
-    debugger
+   
     if (signedInSeller.length == true){
         filteredProducts = products.filter(product => product.seller_id === signedInSeller[0].id)
     }
