@@ -5,7 +5,7 @@ function AddListing({handleAddListing}){
     return (
         <>
             <h3 id="add_listing_text">Add a Listing!</h3>
-            <form id="sign_up_buyer_form" onSubmit = {handleAddListing}> 
+            <form id="add_listing_form" onSubmit = {handleAddListing}> 
               <p>Name</p>
               <input
                 name="name"

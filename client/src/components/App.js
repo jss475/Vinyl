@@ -265,6 +265,8 @@ function App() {
     fetch('http://localhost:9292/products',configObj)
         .then(res => res.json())
         .then(data => setAllProducts([...allProducts,data]))
+
+    document.querySelector('#add_listing_form').reset()
     }
 
     return (
