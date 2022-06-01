@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import '../App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import SignInSeller from './SignInSeller'
@@ -29,6 +29,10 @@ function App() {
   const [signedInBuyer, setSignedInBuyer] = useState([])
   //who signed in as seller
   const [signedInSeller, setSignedInSeller] = useState([])
+
+  //set history for delete item
+  let history = useHistory();
+
 
   //fetch product data
   useEffect(()=> {
@@ -247,6 +251,8 @@ function App() {
     let filteredDeleteArray = allProducts.filter((product) => 
     product.id != id)
     setAllProducts(filteredDeleteArray)
+
+    history.push(`/products`)
   }
   
     // search bar functionality
