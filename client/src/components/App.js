@@ -10,6 +10,8 @@ import Logout from './Logout'
 import NavBar from './NavBar';
 import Home from './Home'
 import Products from './Products';
+import MyListings from './MyListings'
+import AddListing from './AddListing'
 
 function App() {
 
@@ -111,6 +113,7 @@ function App() {
 
       //filter out the sellers that have the same username
       let filteredSeller = allSellers.filter((seller) => {
+        debugger
         if (seller.username === e.target.username.value) {
           return true;
         } else {
@@ -119,9 +122,10 @@ function App() {
       });
     
 
-      if(!filteredSeller.length){
+      if(filteredSeller.length){
         setSignInMsg("Your username has already been taken!")
       }else{
+        setSignInMsg("Success!")
         //create configObj to POST the new seller
         let configObj = {
           method: 'POST',
@@ -240,7 +244,29 @@ function App() {
     const productsToDisplay = allProducts.filter((product) => 
       product.name.toLowerCase().includes(searched) || product.description.toLowerCase().includes(searched) ? true : false)
 
-    debugger
+  function handleAddListing(e){
+    e.preventDefault();
+
+    let configObj= {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: e.target.name.value,
+            price: e.target.price.value,
+            quantity: e.target.quantity.value,
+            description: e.target.description.value,
+            image: e.target.image.value,
+            seller_id: signedInSeller[0].id
+        })
+      }
+
+    fetch('http://localhost:9292/products',configObj)
+        .then(res => res.json())
+        .then(data => setAllProducts([...allProducts,data]))
+    }
+
     return (
       <>
       {/* <div className='App'> */}
@@ -271,6 +297,12 @@ function App() {
           <Route exact path='/Products'>
             <Products products={productsToDisplay} signedInBuyer={signedInBuyer} signedInSeller={signedInSeller}/>
           </Route>     
+          <Route exact path = "/mylistings">
+            <MyListings products={productsToDisplay} signedInSeller={signedInSeller}/>
+          </Route>
+          <Route exact path = "/addlisting">
+            <AddListing signedInSeller={signedInSeller} handleAddListing={handleAddListing}  />
+          </Route>
           <Route exact path="/">
             <Home />
           </Route>

@@ -18,9 +18,15 @@ function NavBar( { handleSearch, handleLogout, signedInBuyer, signedInSeller }) 
         {
             signedInBuyer.length > 0 || signedInSeller.length > 0 ? null :
         <>
-            <Nav.Link as={Link} to="/signin/buyer">Sign In</Nav.Link>
-            <Nav.Link as={Link} to="/signup/buyer">Sign Up</Nav.Link>
+            <Nav.Link as={Link} to="/signin/seller">Sign In</Nav.Link>
+            <Nav.Link as={Link} to="/signup/seller">Sign Up</Nav.Link>
         </>
+        }
+        {
+            signedInSeller.length > 0 ? <>
+            <Nav.Link as={Link} to="/mylistings">My Listings</Nav.Link>
+            <Nav.Link as={Link} to="/addlisting">Add Listing</Nav.Link>
+            </> : null
         }
         </Nav>
         </Container>
