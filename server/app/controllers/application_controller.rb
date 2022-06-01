@@ -41,6 +41,8 @@ class ApplicationController < Sinatra::Base
     post '/sellers' do
         new_seller = Seller.create(
             name: params[:name],
+            username: params[:username],
+            password: params[:password]
         )
         new_seller.to_json
     end
@@ -63,7 +65,9 @@ class ApplicationController < Sinatra::Base
 
     post '/buyers' do
         new_buyer = Buyer.create(
-            name: params[:name]
+            name: params[:name],
+            username: params[:username],
+            password: params[:password]
         )
         new_buyer.to_json
     end

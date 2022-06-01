@@ -244,7 +244,7 @@ function App() {
     return (
       <>
       {/* <div className='App'> */}
-        <NavBar handleSearch={handleSearch} handleLogout={handleLogout}/>
+        <NavBar handleSearch={handleSearch} handleLogout={handleLogout} signedInBuyer={signedInBuyer} signedInSeller={signedInSeller}/>
         <Switch>
         <Route path="/signin/seller">
             <SignInSeller handleSignInSeller={handleSignInSeller}

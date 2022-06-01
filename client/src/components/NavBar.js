@@ -5,7 +5,7 @@ import Logout from './Logout';
 import {Link} from 'react-router-dom'
 
 
-function NavBar( { handleSearch, handleLogout }) {
+function NavBar( { handleSearch, handleLogout, signedInBuyer, signedInSeller }) {
     
     return (
     <>
@@ -15,8 +15,13 @@ function NavBar( { handleSearch, handleLogout }) {
         <Nav className="me-auto">
         <Nav.Link as={Link} to="/">Home</Nav.Link>
         <Nav.Link as={Link} to="/products">Products</Nav.Link>
-        <Nav.Link as={Link} to="/signin/buyer">Sign In</Nav.Link>
-        <Nav.Link as={Link} to="/signup/buyer">Sign Up</Nav.Link>
+        {
+            signedInBuyer.length > 0 || signedInSeller.length > 0 ? null :
+        <>
+            <Nav.Link as={Link} to="/signin/buyer">Sign In</Nav.Link>
+            <Nav.Link as={Link} to="/signup/buyer">Sign Up</Nav.Link>
+        </>
+        }
         </Nav>
         </Container>
         <Logout handleLogout={handleLogout} />
