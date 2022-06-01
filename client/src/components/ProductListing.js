@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 function ProductListing({ signedInSeller, handleUpdateItem, handleDeleteItem}) {
     const { id } = useParams()
     const [productListing, setProductListing] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
 
     function getProductListingFetch() {
         fetch(`http://localhost:9292/products/${id}`)
@@ -37,8 +36,8 @@ function ProductListing({ signedInSeller, handleUpdateItem, handleDeleteItem}) {
             signedInSeller.length > 0 == true ? 
                 (signedInSeller[0].id == productListing[0].seller_id ?
                     <>
-                        <button onClick={() => handleDeleteItem(productListing)}>Delete</button>
-                        <button onClick={() => handleUpdateItem(productListing)}>Update</button>
+                        <button onClick={() => handleDeleteItem(productListing[0].id)}>Delete</button>
+                        <button onClick={() => handleUpdateItem(productListing[0].id)}>Update</button>
                     </> 
                 :null) :null
         }

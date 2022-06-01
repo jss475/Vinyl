@@ -240,9 +240,13 @@ function App() {
     console.log(item)
   }
 
-  function handleDeleteItem(item) {
-    fetch(`http://localhost:9292${item.id}`,
+  function handleDeleteItem(id) {
+    fetch(`http://localhost:9292/products/${id}`,
     {method: "DELETE"})
+    
+    let filteredDeleteArray = allProducts.filter((product) => 
+    product.id != id)
+    setAllProducts(filteredDeleteArray)
   }
   
     // search bar functionality
