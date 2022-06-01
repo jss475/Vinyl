@@ -11,8 +11,8 @@ function ProductPage({ product, handleProductClick }) {
         </div>
             <div className='product-page'>
                 <p>{product.name} {id}</p>
-                <div class="col-md-auto">
-                    <h6 class="mb-3">${product.price}</h6>
+                <div className="col-md-auto">
+                    <h6 className="mb-3">${product.price}</h6>
                 </div>
             </div>
         </div>

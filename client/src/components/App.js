@@ -262,6 +262,7 @@ function App() {
     const productsToDisplay = allProducts.filter((product) => 
       product.name.toLowerCase().includes(searched) || product.description.toLowerCase().includes(searched) ? true : false)
 
+  //adding a new listing as a seller
   function handleAddListing(e){
     e.preventDefault();
 
@@ -285,6 +286,39 @@ function App() {
         .then(data => setAllProducts([...allProducts,data]))
 
     document.querySelector('#add_listing_form').reset()
+    }
+
+    //handle updating a product as a seller. Being sent to ProductListing.js
+    function handleUpdateSubmit(e,id){
+      e.preventDefault()
+      console.log(e)
+      console.log(id)
+      // console.log(id)
+      let configObj = {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          quantity: e.target.quantity.value,
+          price: e.target.price.value
+        })
+      }
+
+      fetch(`http://localhost:9292/products/${id}`,configObj)
+        .then(res => res.json())
+        .then(data => {
+          let newArray = allProducts.map(product => {
+            if(product.id == id){
+              product.price = data.price
+              product.quantity = data.quantity
+              return product
+            }else{
+              return product
+            }
+          })
+          console.log(newArray)
+          setAllProducts(newArray)})
     }
     
 
@@ -319,13 +353,13 @@ function App() {
             <Products products={productsToDisplay} signedInBuyer={signedInBuyer} signedInSeller={signedInSeller} handleProductClick={handleProductClick}/>
           </Route>     
           <Route exact path = "/mylistings">
-            <MyListings products={productsToDisplay} signedInSeller={signedInSeller}/>
+            <MyListings products={productsToDisplay} signedInSeller={signedInSeller} handleProductClick={handleProductClick} />
           </Route>
           <Route exact path = "/addlisting">
             <AddListing signedInSeller={signedInSeller} handleAddListing={handleAddListing}  />
           </Route>
           <Route path='/products/:id'>
-            <ProductListing products={allProducts} allSellers={allSellers} signedInSeller={signedInSeller} handleDeleteItem={handleDeleteItem} handleUpdateItem={handleUpdateItem} />
+            <ProductListing allProducts={allProducts} allSellers={allSellers} signedInSeller={signedInSeller} handleDeleteItem={handleDeleteItem} handleUpdateItem={handleUpdateItem} handleUpdateSubmit={handleUpdateSubmit}/>
           </Route>
           <Route exact path="/">
             <Home />

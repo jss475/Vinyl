@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-function ProductListing({ signedInSeller, handleUpdateItem, handleDeleteItem}) {
+function ProductListing({ allProducts, signedInSeller, handleDeleteItem, handleUpdateSubmit}) {
     const { id } = useParams()
     const [productListing, setProductListing] = useState([])
+    const [updatedClicked, setUpdatedClicked] = useState(false)
+
+    function handleUpdateItem(){
+        setUpdatedClicked(true)
+    }
 
     function getProductListingFetch() {
         fetch(`http://localhost:9292/products/${id}`)
@@ -13,7 +18,7 @@ function ProductListing({ signedInSeller, handleUpdateItem, handleDeleteItem}) {
 
     useEffect(() => {
         getProductListingFetch();
-    }, [])
+    }, [allProducts])
     
     if (productListing.length < 1) {
         return (
@@ -37,10 +42,29 @@ function ProductListing({ signedInSeller, handleUpdateItem, handleDeleteItem}) {
                 (signedInSeller[0].id == productListing[0].seller_id ?
                     <>
                         <button onClick={() => handleDeleteItem(productListing[0].id)}>Delete</button>
-                        <button onClick={() => handleUpdateItem(productListing[0].id)}>Update</button>
+                        <button onClick={() => handleUpdateItem()}>Update</button>
                     </> 
                 :null) :null
         }
+        {updatedClicked == true ? 
+            <div id="update_form_loc">
+                <form id="update_form" onSubmit={(e)=>handleUpdateSubmit(e,productListing[0].id)}>
+                    <p>Quantity</p>
+                    <input
+                        name="quantity"
+                        type="quantity"
+                        placeholder="Enter new quantity"
+                    />
+                    <p>Price</p>
+                    <input
+                        name="price"
+                        type="price"
+                        placeholder="Enter new price"
+                    />
+                    <button type="submit">Submit</button>
+                </form>
+                
+            </div> : null}
         </>
     )}
 }

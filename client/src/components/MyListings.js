@@ -1,7 +1,8 @@
 import React from 'react'
 import ProductPage from './ProductPage'
+import { Link } from 'react-router-dom';
 
-function MyListings({ products, signedInSeller }) {
+function MyListings({ products, signedInSeller, handleProductClick }) {
 
     let filteredProducts = []
     debugger
@@ -13,7 +14,11 @@ function MyListings({ products, signedInSeller }) {
         <div className='grid'>
             <div className='product-grid'>
             {filteredProducts.map((product) => {
-                return <ProductPage key={product.id} product={product} />
+                return (
+                <Link to={`/products/${product.id}`}>
+                    <ProductPage key={product.id} product={product} handleProductClick={handleProductClick}/>
+                </Link>
+                )  
             })}
             </div>
         </div>
