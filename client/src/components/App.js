@@ -10,6 +10,7 @@ import Logout from './Logout'
 import NavBar from './NavBar';
 import Home from './Home'
 import Products from './Products';
+import ProductListing from './ProductListing';
 
 function App() {
 
@@ -69,7 +70,6 @@ function App() {
           return false;
         }
       });
-      debugger
 
       if(filteredBuyer.length){
         setSignInMsg("Your username has already been taken!")
@@ -169,7 +169,6 @@ function App() {
           return false;
         }
       });
-        debugger
         if(!filteredBuyer.length){
           setSignInMsg("Your Username and Password Are Not In The System")
         }else {
@@ -223,7 +222,6 @@ function App() {
 
   //handle logout event
   function handleLogout() {
-    debugger
     if(signedInSeller.length==false && signedInBuyer.length == true){
       setSignedInBuyer([])
       localStorage.setItem("username",'')
@@ -233,14 +231,19 @@ function App() {
     }
   }
   
+    // search bar functionality
     function handleSearch(e) {
       setSearched(e)
     }
 
+    // used for individual product listing ref
+    function handleProductClick(product) {
+      console.log(product)
+  }
+
     const productsToDisplay = allProducts.filter((product) => 
       product.name.toLowerCase().includes(searched) || product.description.toLowerCase().includes(searched) ? true : false)
 
-    debugger
     return (
       <>
       {/* <div className='App'> */}
@@ -268,9 +271,12 @@ function App() {
           {/* <Route path="/logout">
             <Logout handleLogout={handleLogout}/>
           </Route> */}
-          <Route exact path='/Products'>
-            <Products products={productsToDisplay} signedInBuyer={signedInBuyer} signedInSeller={signedInSeller}/>
+          <Route exact path='/products'>
+            <Products products={productsToDisplay} signedInBuyer={signedInBuyer} signedInSeller={signedInSeller} handleProductClick={handleProductClick}/>
           </Route>     
+          <Route exact path='/products/:id'>
+            <ProductListing />
+          </Route>
           <Route exact path="/">
             <Home />
           </Route>
