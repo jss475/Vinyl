@@ -274,12 +274,14 @@ console.log(sellerName)
 
   //handle logout event
   function handleLogout() {
-  
-    if(sellerState===false && signedInBuyer.length == true){
+    //if buyer is the only one logged in
+    if(sellerState===false && buyerState == true){
       setSignedInBuyer([])
+      setBuyerState(false)
       
       localStorage.setItem("username",'')
-    }else if(sellerState === true && signedInBuyer.length ==false){
+      //if seller is logged in
+    }else if(sellerState === true && buyerState ==false){
       setSignedInSeller([])
       setSellerState(false)
       localStorage.setItem("username",'')
