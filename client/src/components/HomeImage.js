@@ -8,7 +8,7 @@ const HomeImage = () => (
                 <div className='content'>
                 <div className="home-container">
                 </div>
-                    <span className='img-txt'>all</span>
+                    <span className='img-txt'></span>
                 </div>
         </Parallax>
     )

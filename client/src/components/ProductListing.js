@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-function ProductListing({ allProducts, signedInSeller, handleDeleteItem, handleUpdateSubmit, handleUpdateItem, updatedClicked, sellerState}) {
+function ProductListing({ allProducts, signedInSeller, signedInBuyer, handleDeleteItem, handleUpdateSubmit, handleUpdateItem, handleBuyItem, updatedClicked, sellerState, buyerState }) {
     const { id } = useParams()
     const [productListing, setProductListing] = useState([])
 
@@ -29,7 +29,12 @@ function ProductListing({ allProducts, signedInSeller, handleDeleteItem, handleU
         <div className='product-listing-info'>
             <h2>{productListing[0].name}</h2>
             <p>Price: ${productListing[0].price}</p>
-            <p>Quantity: {productListing[0].quantity}</p>
+        {
+            productListing[0].quantity > 0 ?
+                <p>Quantity: {productListing[0].quantity}</p>
+            : productListing[0].quantity <= 0 ?
+                <p>Out of Stock</p> : null
+        }
             <p>Sold by: {productListing[1].name}</p>
         </div>
         {
@@ -69,6 +74,20 @@ function ProductListing({ allProducts, signedInSeller, handleDeleteItem, handleU
                 </form>
                 
             </div> : null}
+            {
+            buyerState == true && signedInBuyer.id != productListing[0].buyer_id && productListing[0].quantity > 0? 
+                    <>
+                        <button onClick={() => handleBuyItem(productListing[0].id)}>Purchase</button>
+                    </> 
+             : buyerState == true && signedInBuyer.id == productListing[0].buyer_id && productListing[0].quantity > 0 ?
+                <>
+                    <button onClick={() => handleBuyItem(productListing[0].id)}>Buy again?</button>
+                </>
+                : productListing[0].quantity <= 0 ?
+                <>
+                </>
+                : null
+        }
         </>
     )}
 }

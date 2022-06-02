@@ -6,13 +6,13 @@ import SignInSeller from './SignInSeller'
 import SignInBuyer from './SignInBuyer'
 import SignUpSeller from './SignUpSeller'
 import SignUpBuyer from './SignUpBuyer'
-import Logout from './Logout'
 import NavBar from './NavBar';
 import Home from './Home'
 import Products from './Products';
 import MyListings from './MyListings'
 import AddListing from './AddListing'
 import ProductListing from './ProductListing';
+import MyPurchases from './MyPurchases';
 
 function App() {
 
@@ -32,11 +32,15 @@ function App() {
 
   //true false state for seller sign in
   const [sellerState, setSellerState] = useState(false)
+
+  //true false state for buyer sign in 
+  const [buyerState, setBuyerState] = useState(false)
   //true false state of products being added
   const [addedPState, setAddedPState] = useState(false)
 
   //set history for delete item
   let history = useHistory();
+
 
 
   //fetch product data
@@ -108,6 +112,8 @@ function App() {
             setAllBuyers([...allBuyers,data])
           })
 
+          setBuyerState(true)
+
           document.querySelector('#sign_up_buyer_form').reset()
           history.push('/products')
         }
@@ -156,7 +162,6 @@ function App() {
             balance: 0
           })
         }
-
         
         //update server for new seller
         fetch('http://localhost:9292/sellers', configObj)
@@ -165,6 +170,7 @@ function App() {
           setSignedInSeller(data)
           setAllSellers([...allSellers,data])
         })
+
 
 
         setSellerState(true)
@@ -207,6 +213,7 @@ function App() {
           setSignInMsg("Success!")
           //set who signed in
           setSignedInBuyer(filteredBuyer)
+          setBuyerState(true)
           //local storage of username
           localStorage.setItem("username", e.target.username.value);
           history.push('/products')
@@ -341,6 +348,45 @@ function App() {
     history.push('/mylistings')
     }
 
+    //handle buy item as buyer - update/patch product info
+    function handleBuyItem(e) {
+      console.log(signedInBuyer)
+      let boughtItem = allProducts.filter((item) => 
+        item.id === e)
+
+      let { quantity, price, id } = boughtItem[0]
+
+      let quantityUpdate = {
+        method: "PATCH",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          price: price,
+          quantity: (quantity - 1),
+          buyer_id: signedInBuyer.id
+        })
+      }
+
+      fetch(`http://localhost:9292/products/${id}`, quantityUpdate)
+        .then(res => res.json())
+        .then(data => 
+          {
+          let newArray = allProducts.map(product => {
+            if(product.id == id){
+              product.quantity = data.quantity
+              product.buyer_id = signedInBuyer.id
+              return product
+            }else{
+              return product
+            }
+          })
+          console.log(newArray)
+          setAllProducts(newArray)
+        })
+
+    }
+
     //handle updating a product as a seller. Being sent to ProductListing.js
     function handleUpdateSubmit(e,id){
       e.preventDefault()
@@ -370,7 +416,6 @@ function App() {
               return product
             }
           })
-          console.log(newArray)
           setAllProducts(newArray)
           setUpdatedClicked(false)}
           )
@@ -392,6 +437,7 @@ function App() {
         signedInBuyer={signedInBuyer} 
         signedInSeller={signedInSeller}
         sellerState={sellerState}
+        buyerState={buyerState}
         />
         <Switch>
         <Route path="/signin/seller">
@@ -412,10 +458,11 @@ function App() {
             <SignUpBuyer handleSignUpBuyer={handleSignUpBuyer}
             signInMsg={signInMsg}
             />
+            </Route>
+          <Route exact path="/mypurchases">
+            <MyPurchases products={productsToDisplay} signedInBuyer={signedInBuyer} handleProductClick={handleProductClick}
+            />
           </Route>
-          {/* <Route path="/logout">
-            <Logout handleLogout={handleLogout}/>
-          </Route> */}
           <Route exact path='/products'>
             <Products products={productsToDisplay} signedInBuyer={signedInBuyer} signedInSeller={signedInSeller} handleProductClick={handleProductClick}/>
           </Route>     
@@ -426,9 +473,8 @@ function App() {
             <AddListing signedInSeller={signedInSeller} handleAddListing={handleAddListing}  />
           </Route>
           <Route path='/products/:id'>
-            <ProductListing allProducts={allProducts} allSellers={allSellers} signedInSeller={signedInSeller} handleDeleteItem={handleDeleteItem} handleUpdateItem={handleUpdateItem} handleUpdateSubmit={handleUpdateSubmit}
-            updatedClicked={updatedClicked}
-            sellerState={sellerState}
+            <ProductListing allProducts={allProducts} allSellers={allSellers} signedInSeller={signedInSeller} signedInBuyer={signedInBuyer} handleDeleteItem={handleDeleteItem} handleUpdateItem={handleUpdateItem} handleBuyItem={handleBuyItem} handleUpdateSubmit={handleUpdateSubmit}
+            updatedClicked={updatedClicked} sellerState={sellerState} buyerState={buyerState} 
             />
           </Route>
           <Route exact path="/">
