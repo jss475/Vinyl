@@ -3,7 +3,7 @@ import { Parallax } from 'react-parallax';
 import mountain from '../images/mountain.jpg'
 
 const HomeImage = () => (
-        <Parallax bgImage={mountain} className='image'
+        <Parallax  className='image'
             strength={800}>
                 <div className='content'>
                 <div className="home-container">

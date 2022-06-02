@@ -2,9 +2,10 @@ import React from 'react';
 import HomeImage from './HomeImage';
 
 function Home() {
+    document.querySelector("#myVideo")
     return (
         <>
-            <HomeImage />
+            {/* <HomeImage /> */}
         </>
     )
 }

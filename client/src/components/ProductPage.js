@@ -4,7 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, CardGroup, ListGroup } from 'react-bootstrap';
 
 function ProductPage({ product, handleProductClick }) {
-
+    
+    document.querySelector("#myVideo").style.display = "none";
     const { id } = useParams()
     return (
         <CardGroup>
