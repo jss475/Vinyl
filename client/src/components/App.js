@@ -27,8 +27,10 @@ function App() {
 
   //who signed in as buyer
   const [signedInBuyer, setSignedInBuyer] = useState([])
+  const [buyerName, setBuyerName] = useState('')
   //who signed in as seller
   const [signedInSeller, setSignedInSeller] = useState([])
+  const [sellerName, setSellerName] = useState('')
 
   //true false state for seller sign in
   const [sellerState, setSellerState] = useState(false)
@@ -69,6 +71,7 @@ function App() {
   function handleSignUpBuyer(e){
     e.preventDefault() //don't reset the form on submit
 
+    let buyerNameLocal = e.target.name.value
     if (e.target.password.value === "" && e.target.username.value === "") {
       setSignInMsg("Please Fill Out Your Username and Password!");
     } else if (e.target.password.value === "") {
@@ -110,8 +113,8 @@ function App() {
           .then(data => {
             setSignedInBuyer(data)
             setAllBuyers([...allBuyers,data])
+            setSellerName(buyerNameLocal)
           })
-
           setBuyerState(true)
 
           document.querySelector('#sign_up_buyer_form').reset()
@@ -143,7 +146,7 @@ function App() {
           return false;
         }
       });
-    
+      let sellerNameLocal = e.target.name.value
       //if a username has been found, return the error message
       if(filteredSeller.length){
         setSignInMsg("Your username has already been taken!")
@@ -169,8 +172,8 @@ function App() {
         .then(data => {
           setSignedInSeller(data)
           setAllSellers([...allSellers,data])
+          setSellerName(sellerNameLocal)
         })
-
 
 
         setSellerState(true)
@@ -183,6 +186,8 @@ function App() {
   }
 }
 
+
+console.log(sellerName)
 
 
   //handle signinbuyer event
@@ -214,6 +219,8 @@ function App() {
           //set who signed in
           setSignedInBuyer(filteredBuyer)
           setBuyerState(true)
+          setBuyerName(filteredBuyer.name)
+
           //local storage of username
           localStorage.setItem("username", e.target.username.value);
           history.push('/products')
@@ -254,6 +261,7 @@ function App() {
           setSignInMsg("Success!")
           //set who signed in
           setSignedInSeller(filteredSeller)
+          setSellerName(filteredSeller.name)
           //set state of if signed in
           setSellerState(true)
           //local storage of username
@@ -438,6 +446,8 @@ function App() {
         signedInSeller={signedInSeller}
         sellerState={sellerState}
         buyerState={buyerState}
+        sellerName={sellerName}
+        buyerName={buyerName}
         />
         <Switch>
         <Route path="/signin/seller">

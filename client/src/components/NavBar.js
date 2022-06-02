@@ -5,18 +5,18 @@ import Logout from './Logout';
 import {Link} from 'react-router-dom'
 
 
-function NavBar( { handleSearch, handleLogout, signedInBuyer, signedInSeller, sellerState, buyerState }) {
+function NavBar( { handleSearch, handleLogout, signedInBuyer, signedInSeller, sellerState, buyerState, buyerName, sellerName }) {
 
     return (
     <>
     <Navbar variant="transparent">
         <Container>
             {
-            signedInBuyer.length > 0 ?
-        <Navbar.Brand as={Link} to="/">Welcome {signedInBuyer[0].name}!</Navbar.Brand>
+            buyerName.length > 0 ?
+        <Navbar.Brand as={Link} to="/">Welcome {buyerName}!</Navbar.Brand>
             :
-            signedInSeller.length > 0 ?
-        <Navbar.Brand as={Link} to="/">Welcome {signedInSeller[0].name}!</Navbar.Brand>
+            sellerName.length > 0 ?
+        <Navbar.Brand as={Link} to="/">Welcome {sellerName}!</Navbar.Brand>
             :
         <Navbar.Brand as={Link} to="/"></Navbar.Brand>
             }
