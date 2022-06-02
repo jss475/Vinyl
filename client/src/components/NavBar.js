@@ -9,7 +9,7 @@ function NavBar( { handleSearch, handleLogout, signedInBuyer, signedInSeller, se
 
     return (
     <>
-    <Navbar variant="transparent">
+    <Navbar variant="dark" bg="dark">
         <Container>
             {
             buyerName.length > 0 ?
@@ -27,12 +27,12 @@ function NavBar( { handleSearch, handleLogout, signedInBuyer, signedInSeller, se
             buyerState === true || sellerState === true  ? null :
         <>
             <NavDropdown title="Sign In" id='sign_in_nav'>
-                <Nav.Link as={Link} to="/signin/seller">Seller Sign In</Nav.Link>
-                <Nav.Link as={Link} to="/signin/buyer">Buyer Sign In</Nav.Link>
+                <NavDropdown.Item as={Link} to="/signin/seller">Seller Sign In</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/signin/buyer">Buyer Sign In</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Sign Up" id='sign_up_nav'>
-                <Nav.Link as={Link} to="/signup/seller">Seller Sign Up</Nav.Link>
-                <Nav.Link as={Link} to="/signup/buyer">Buyer Sign Up</Nav.Link>
+                <NavDropdown.Item as={Link} to="/signup/seller">Seller Sign Up</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/signup/buyer">Buyer Sign Up</NavDropdown.Item>
             </NavDropdown>
         </>
         }

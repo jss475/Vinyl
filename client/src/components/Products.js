@@ -18,7 +18,7 @@ function Products({ products, signedInBuyer, signedInSeller, handleProductClick 
             <div className='product-grid'>
             {products.map((product) => {
                 return (
-                <Link to={`/products/${product.id}`}>
+                <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
                 <ProductPage key={product.id} product={product} handleProductClick={handleProductClick} />
                 </Link>
             )})}

@@ -13,6 +13,7 @@ import MyListings from './MyListings'
 import AddListing from './AddListing'
 import ProductListing from './ProductListing';
 import MyPurchases from './MyPurchases';
+import ScrollToTop from './ScrollToTop'
 
 function App() {
 
@@ -310,7 +311,7 @@ function App() {
 
     // used for individual product listing ref
     function handleProductClick(product) {
-      console.log(product)
+      setUpdatedClicked(false)
   }
 
     const productsToDisplay = allProducts.filter((product) => 
@@ -448,6 +449,7 @@ function App() {
         sellerName={sellerName}
         buyerName={buyerName}
         />
+        <ScrollToTop />
         <Switch>
         <Route path="/signin/seller">
             <SignInSeller handleSignInSeller={handleSignInSeller}
