@@ -72,14 +72,25 @@ code {
 
 .product-listing {
   align-items: center;
+  width: 100%;
+
 }
 .listing-image {
   height: 50%;
   width: 50%;
+  margin: 50px;
 }
 
-.product-listing-info {
-  justify-self: baseline;
-  justify-content: center;
+
+.product-container {
+  display: flex;
+  align-items: center;
+  margin: 25px;
+
+}
+
+.description {
+  display: flex;
+  padding: 50px
 }
 

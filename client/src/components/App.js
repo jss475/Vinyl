@@ -276,12 +276,14 @@ function App() {
     if(sellerState===false && buyerState == true){
       setSignedInBuyer([])
       setBuyerState(false)
+      setBuyerName('')
       
       localStorage.setItem("username",'')
       //if seller is logged in
     }else if(sellerState === true && buyerState ==false){
       setSignedInSeller([])
       setSellerState(false)
+      setSellerName('')
       localStorage.setItem("username",'')
     }
     history.push('/')
@@ -358,6 +360,12 @@ function App() {
 
     //handle buy item as buyer - update/patch product info
     function handleBuyItem(e) {
+      let buyerId
+    if(signedInBuyer.length > 0){
+      buyerId = signedInBuyer[0].id
+    }else{
+      buyerId = signedInBuyer.id
+    }
       console.log(signedInBuyer)
       let boughtItem = allProducts.filter((item) => 
         item.id === e)
@@ -372,7 +380,7 @@ function App() {
         body: JSON.stringify({
           price: price,
           quantity: (quantity - 1),
-          buyer_id: signedInBuyer.id
+          buyer_id: buyerId
         })
       }
 
@@ -383,7 +391,11 @@ function App() {
           let newArray = allProducts.map(product => {
             if(product.id == id){
               product.quantity = data.quantity
-              product.buyer_id = signedInBuyer.id
+                if(signedInBuyer.length > 0) {
+                  product.buyer_id = signedInBuyer[0].id
+                } else if (signedInBuyer.username.length > 0) {
+                   product.buyer_id = signedInBuyer.id
+                }
               return product
             }else{
               return product
