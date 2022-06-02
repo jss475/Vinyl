@@ -1,6 +1,8 @@
 import React from 'react'
 
 function SignUpBuyer({handleSignUpBuyer, signInMsg}){
+  document.querySelector("#myVideo").style.display = 'none';
+
     return (
         <div id="sign_up_buyer_bg">
           <div className="loginbox">
