@@ -37,7 +37,7 @@ Product.create(
     name: "Made",
     price: rand(10..50),
     quantity: rand(1..50),
-    description: "Made is the third Korean-language studio album by South Korean boy band Big Bang. Made was preceded by four single albums, each containing two singles each, all released in increments from May—August 2015. After over a year of delays, the full album was released on December 13, 2016. It marks the group's comeback after a three-year hiatus and their first full length Korean album since Remember (2008). The production of Made was primarily handled by G-Dragon along with long-time group collaborator Teddy Park. Musically, the album employs a variety of musical styles, integrating a range of genres from hip hop, EDM, pop rock, R&B, to trap."
+    description: "Made is the third Korean-language studio album by South Korean boy band Big Bang. Made was preceded by four single albums, each containing two singles each, all released in increments from May—August 2015. After over a year of delays, the full album was released on December 13, 2016. It marks the group's comeback after a three-year hiatus and their first full length Korean album since Remember (2008). The production of Made was primarily handled by G-Dragon along with long-time group collaborator Teddy Park. Musically, the album employs a variety of musical styles, integrating a range of genres from hip hop, EDM, pop rock, R&B, to trap.",
     seller_id: Seller.ids.sample,
     buyer_id: Buyer.ids.sample,
     image: 'https://upload.wikimedia.org/wikipedia/en/b/b2/BIGBANG_-_MADE.jpg'
@@ -77,7 +77,7 @@ Product.create(
 
 #Red Velvet Perfect Velvet
 Product.create(
-    name: "Perfect Velvet"
+    name: "Perfect Velvet",
     price: rand(10..50),
     quantity: rand(1..50),
     description: "Perfect Velvet is the second studio album by South Korean girl group Red Velvet. Released by SM Entertainment on November 17, 2017, the record incorporates R&B, soul and hip-hop with influences from future bass, trap and synth-pop, and saw contributions from various songwriters and production teams.The album is a portrayal of the group's 'velvet' concept, making it their second major release to follow this sonic direction since their second extended play, The Velvet (2016). The album reissued as The Perfect Red Velvet on January 29, 2018.",
