@@ -3,8 +3,7 @@ import ProductPage from './ProductPage';
 import { Link } from 'react-router-dom';
 
 function Products({ products, signedInBuyer, signedInSeller, handleProductClick }) {
-    console.log(products)
-    console.log(signedInBuyer)
+
     // let filteredProducts = []
     // if (signedInSeller.length == true){
     //     filteredProducts = products.filter(product => product.seller_id === signedInSeller[0].id)
@@ -12,14 +11,13 @@ function Products({ products, signedInBuyer, signedInSeller, handleProductClick 
     //     debugger
     //     filteredProducts = products.filter(product => product.buyer_id === signedInBuyer[0].id)
     // }
-    console.log(products)
     return (
         <div className='grid'>
             <div className='product-grid'>
             {products.map((product) => {
                 return (
-                <Link to={`/products/${product.id}`}>
-                <ProductPage key={product.id} product={product} handleProductClick={handleProductClick} />
+                <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
+                    <ProductPage key={product.id} product={product} handleProductClick={handleProductClick} />
                 </Link>
             )})}
             </div>

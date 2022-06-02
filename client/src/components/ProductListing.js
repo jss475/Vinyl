@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function ProductListing({ allProducts, signedInSeller, handleDeleteItem, handleUpdateSubmit, handleUpdateItem, updatedClicked, sellerState}) {
     const { id } = useParams()
@@ -32,6 +33,15 @@ function ProductListing({ allProducts, signedInSeller, handleDeleteItem, handleU
             <p>Quantity: {productListing[0].quantity}</p>
             <p>Sold by: {productListing[1].name}</p>
         </div>
+        {/* <Card style={{width: '18rem'}} className="text-center" >
+            <Card.Img variant="top" src={productListing[0].image} />
+            <Card.Body>
+                <Card.Title>{productListing[0].name}</Card.Title>
+                <Card.Text>Price: ${productListing[0].price}</Card.Text>
+                <Card.Text>Quantity: {productListing[0].quantity}</Card.Text>
+                <Card.Text>Sold by: {productListing[1].name}</Card.Text>
+            </Card.Body>
+        </Card> */}
         {
             signedInSeller.length > 0 == true ? 
                 (signedInSeller[0].id == productListing[0].seller_id ?

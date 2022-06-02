@@ -1,9 +1,10 @@
 import React from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function Logout({handleLogout}){
 
     return (
-        <button onClick = {handleLogout}>Logout</button>
+        <button type="button" class="btn btn-dark" onClick = {handleLogout}>Logout</button>
     )
 }
 

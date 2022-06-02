@@ -13,6 +13,9 @@ import Products from './Products';
 import MyListings from './MyListings'
 import AddListing from './AddListing'
 import ProductListing from './ProductListing';
+import ScrollToTop from './ScrollToTop';
+
+
 
 function App() {
 
@@ -296,7 +299,7 @@ function App() {
 
     // used for individual product listing ref
     function handleProductClick(product) {
-      console.log(product)
+      setUpdatedClicked(false)
   }
 
     const productsToDisplay = allProducts.filter((product) => 
@@ -344,9 +347,7 @@ function App() {
     //handle updating a product as a seller. Being sent to ProductListing.js
     function handleUpdateSubmit(e,id){
       e.preventDefault()
-      console.log(e)
-      console.log(id)
-      // console.log(id)
+
       let configObj = {
         method: 'PATCH',
         headers: {
@@ -388,11 +389,13 @@ function App() {
     return (
       <>
       {/* <div className='App'> */}
+      
         <NavBar handleSearch={handleSearch} handleLogout={handleLogout} 
         signedInBuyer={signedInBuyer} 
         signedInSeller={signedInSeller}
         sellerState={sellerState}
         />
+        <ScrollToTop />
         <Switch>
         <Route path="/signin/seller">
             <SignInSeller handleSignInSeller={handleSignInSeller}
@@ -438,6 +441,7 @@ function App() {
             <h1>404 not found</h1>
           </Route>   
         </Switch>
+
       {/* </div> */}
       </>
   );
