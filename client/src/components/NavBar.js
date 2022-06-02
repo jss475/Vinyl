@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import Search from './Search';
 import Logout from './Logout';
 import {Link} from 'react-router-dom'
@@ -18,8 +18,14 @@ function NavBar( { handleSearch, handleLogout, signedInBuyer, signedInSeller }) 
         {
             signedInBuyer.length > 0 || signedInSeller.length > 0 ? null :
         <>
-            <Nav.Link as={Link} to="/signin/seller">Sign In</Nav.Link>
-            <Nav.Link as={Link} to="/signup/seller">Sign Up</Nav.Link>
+            <NavDropdown title="Sign In" id='sign_in_nav'>
+                <Nav.Link as={Link} to="/signin/seller">Seller Sign In</Nav.Link>
+                <Nav.Link as={Link} to="/signin/buyer">Buyer Sign In</Nav.Link>
+            </NavDropdown>
+            <NavDropdown title="Sign Up" id='sign_up_nav'>
+                <Nav.Link as={Link} to="/signup/seller">Seller Sign Up</Nav.Link>
+                <Nav.Link as={Link} to="/signup/buyer">Buyer Sign Up</Nav.Link>
+            </NavDropdown>
         </>
         }
         {
