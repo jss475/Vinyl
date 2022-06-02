@@ -30,6 +30,11 @@ function App() {
   //who signed in as seller
   const [signedInSeller, setSignedInSeller] = useState([])
 
+  //true false state for seller sign in
+  const [sellerState, setSellerState] = useState(false)
+  //true false state of products being added
+  const [addedPState, setAddedPState] = useState(false)
+
   //set history for delete item
   let history = useHistory();
 
@@ -80,6 +85,8 @@ function App() {
       if(filteredBuyer.length){
         setSignInMsg("Your username has already been taken!")
       }else{
+
+        
         //create configObj to POST the new buyer
         let configObj = {
           method: 'POST',
@@ -96,17 +103,23 @@ function App() {
         //update server for new buyer
         fetch('http://localhost:9292/buyers', configObj)
           .then(res => res.json())
-          .then(data => setAllBuyers([...allBuyers,data]))
+          .then(data => {
+            setSignedInBuyer(data)
+            setAllBuyers([...allBuyers,data])
+          })
 
           document.querySelector('#sign_up_buyer_form').reset()
+          history.push('/products')
         }
       }
     }
+
 
   //handle signupseller event
   function handleSignUpSeller(e) {
     e.preventDefault() //don't reset the form on submit
     
+    //conditionals on if you do/do not submit a proper username/password
     if (e.target.password.value === "" && e.target.username.value === "") {
       setSignInMsg("Please Fill Out Your Username and Password!");
     } else if (e.target.password.value === "") {
@@ -117,7 +130,7 @@ function App() {
 
       //filter out the sellers that have the same username
       let filteredSeller = allSellers.filter((seller) => {
-        debugger
+      
         if (seller.username === e.target.username.value) {
           return true;
         } else {
@@ -125,7 +138,7 @@ function App() {
         }
       });
     
-
+      //if a username has been found, return the error message
       if(filteredSeller.length){
         setSignInMsg("Your username has already been taken!")
       }else{
@@ -143,12 +156,23 @@ function App() {
             balance: 0
           })
         }
+
+        
         //update server for new seller
         fetch('http://localhost:9292/sellers', configObj)
         .then(res => res.json())
-        .then(data => setAllSellers([...allSellers,data]))
+        .then(data => {
+          setSignedInSeller(data)
+          setAllSellers([...allSellers,data])
+        })
 
+
+        setSellerState(true)
+
+        //refresh the form
         document.querySelector('#sign_up_seller_form').reset()
+        //rerout to add listing once you sign up as a seller
+        history.push('/addlisting')
     }
   }
 }
@@ -185,6 +209,7 @@ function App() {
           setSignedInBuyer(filteredBuyer)
           //local storage of username
           localStorage.setItem("username", e.target.username.value);
+          history.push('/products')
         }
       }
       document.querySelector('#sign_in_buyer_form').reset()
@@ -222,8 +247,11 @@ function App() {
           setSignInMsg("Success!")
           //set who signed in
           setSignedInSeller(filteredSeller)
+          //set state of if signed in
+          setSellerState(true)
           //local storage of username
           localStorage.setItem("username", e.target.username.value);
+          history.push('/mylistings')
         }
       }
       document.querySelector('#sign_in_seller_form').reset()
@@ -231,19 +259,25 @@ function App() {
 
   //handle logout event
   function handleLogout() {
-    if(signedInSeller.length==false && signedInBuyer.length == true){
+  
+    if(sellerState===false && signedInBuyer.length == true){
       setSignedInBuyer([])
+      
       localStorage.setItem("username",'')
-    }else if(signedInSeller.length == true && signedInBuyer.length ==false){
+    }else if(sellerState === true && signedInBuyer.length ==false){
       setSignedInSeller([])
+      setSellerState(false)
       localStorage.setItem("username",'')
     }
+    history.push('/')
   }
 
   function handleUpdateItem(item) {
     console.log(item)
   }
 
+
+  //handle deleting an item
   function handleDeleteItem(id) {
     fetch(`http://localhost:9292/products/${id}`,
     {method: "DELETE"})
@@ -272,6 +306,16 @@ function App() {
   function handleAddListing(e){
     e.preventDefault();
 
+
+    //we did this because when you just sign in. SignedInSeller uses a .filter to be updated hence an array is put out
+    //when you sign up, just the object of the seller created is used to update SignedInSeller
+    let sellerID 
+    if(signedInSeller.length > 0){
+      sellerID = signedInSeller[0].id
+    }else{
+      sellerID = signedInSeller.id
+    }
+
     let configObj= {
         method: 'POST',
         headers: {
@@ -283,15 +327,18 @@ function App() {
             quantity: e.target.quantity.value,
             description: e.target.description.value,
             image: e.target.image.value,
-            seller_id: signedInSeller[0].id
+            seller_id: sellerID
         })
       }
 
     fetch('http://localhost:9292/products',configObj)
         .then(res => res.json())
         .then(data => setAllProducts([...allProducts,data]))
-
+    
     document.querySelector('#add_listing_form').reset()
+
+    //reroute to mylistings
+    history.push('/mylistings')
     }
 
     //handle updating a product as a seller. Being sent to ProductListing.js
@@ -341,7 +388,11 @@ function App() {
     return (
       <>
       {/* <div className='App'> */}
-        <NavBar handleSearch={handleSearch} handleLogout={handleLogout} signedInBuyer={signedInBuyer} signedInSeller={signedInSeller}/>
+        <NavBar handleSearch={handleSearch} handleLogout={handleLogout} 
+        signedInBuyer={signedInBuyer} 
+        signedInSeller={signedInSeller}
+        sellerState={sellerState}
+        />
         <Switch>
         <Route path="/signin/seller">
             <SignInSeller handleSignInSeller={handleSignInSeller}
@@ -369,7 +420,7 @@ function App() {
             <Products products={productsToDisplay} signedInBuyer={signedInBuyer} signedInSeller={signedInSeller} handleProductClick={handleProductClick}/>
           </Route>     
           <Route exact path = "/mylistings">
-            <MyListings products={productsToDisplay} signedInSeller={signedInSeller} handleProductClick={handleProductClick} />
+            <MyListings products={productsToDisplay} signedInSeller={signedInSeller} handleProductClick={handleProductClick} addedPState={addedPState} />
           </Route>
           <Route exact path = "/addlisting">
             <AddListing signedInSeller={signedInSeller} handleAddListing={handleAddListing}  />
@@ -377,6 +428,7 @@ function App() {
           <Route path='/products/:id'>
             <ProductListing allProducts={allProducts} allSellers={allSellers} signedInSeller={signedInSeller} handleDeleteItem={handleDeleteItem} handleUpdateItem={handleUpdateItem} handleUpdateSubmit={handleUpdateSubmit}
             updatedClicked={updatedClicked}
+            sellerState={sellerState}
             />
           </Route>
           <Route exact path="/">

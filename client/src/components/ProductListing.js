@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-function ProductListing({ allProducts, signedInSeller, handleDeleteItem, handleUpdateSubmit, handleUpdateItem, updatedClicked}) {
+function ProductListing({ allProducts, signedInSeller, handleDeleteItem, handleUpdateSubmit, handleUpdateItem, updatedClicked, sellerState}) {
     const { id } = useParams()
     const [productListing, setProductListing] = useState([])
 
@@ -35,6 +35,15 @@ function ProductListing({ allProducts, signedInSeller, handleDeleteItem, handleU
         {
             signedInSeller.length > 0 == true ? 
                 (signedInSeller[0].id == productListing[0].seller_id ?
+                    <>
+                        <button onClick={() => handleDeleteItem(productListing[0].id)}>Delete</button>
+                        <button onClick={() => handleUpdateItem()}>Update</button>
+                    </> 
+                :null) :null
+        }
+         {
+            sellerState == true ? 
+                (signedInSeller.id == productListing[0].seller_id ?
                     <>
                         <button onClick={() => handleDeleteItem(productListing[0].id)}>Delete</button>
                         <button onClick={() => handleUpdateItem()}>Update</button>

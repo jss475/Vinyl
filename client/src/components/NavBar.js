@@ -5,8 +5,8 @@ import Logout from './Logout';
 import {Link} from 'react-router-dom'
 
 
-function NavBar( { handleSearch, handleLogout, signedInBuyer, signedInSeller }) {
-    
+function NavBar( { handleSearch, handleLogout, signedInBuyer, sellerState}) {
+
     return (
     <>
     <Navbar variant="transparent">
@@ -16,7 +16,7 @@ function NavBar( { handleSearch, handleLogout, signedInBuyer, signedInSeller }) 
         <Nav.Link as={Link} to="/">Home</Nav.Link>
         <Nav.Link as={Link} to="/products">Products</Nav.Link>
         {
-            signedInBuyer.length > 0 || signedInSeller.length > 0 ? null :
+            signedInBuyer.length > 0 || sellerState === true  ? null :
         <>
             <NavDropdown title="Sign In" id='sign_in_nav'>
                 <Nav.Link as={Link} to="/signin/seller">Seller Sign In</Nav.Link>
@@ -29,7 +29,8 @@ function NavBar( { handleSearch, handleLogout, signedInBuyer, signedInSeller }) 
         </>
         }
         {
-            signedInSeller.length > 0 ? <>
+            // signedInSeller.length > 0
+            sellerState === true ? <>
             <Nav.Link as={Link} to="/mylistings">My Listings</Nav.Link>
             <Nav.Link as={Link} to="/addlisting">Add Listing</Nav.Link>
             </> : null
