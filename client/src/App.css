@@ -39,10 +39,10 @@
 }
 
 .product_page_image{
-  min-height: 12rem;
-  max-height: 12rem;
+  min-height: 8rem;
+  max-height: 8rem;
   object-fit: cover;
-  padding: 10px;
+  
   /* display: block; */
   /* margin-left: 50%;
   margin-right: 50%; */
@@ -53,8 +53,9 @@
 .product_page_card{
   text-align: center;
   min-width: 20%;
-  height: 22rem;
+  height: 18rem;
   text-decoration: none;
+  padding: 10px;
 }
 
 .product_page_title{
@@ -119,4 +120,13 @@
   100%{
     transform: translateY(0px);
   }
+}
+
+/* video */
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  max-width: 100%;
+  height: auto;
 }
