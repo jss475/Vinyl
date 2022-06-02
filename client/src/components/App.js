@@ -187,9 +187,6 @@ function App() {
 }
 
 
-console.log(sellerName)
-
-
   //handle signinbuyer event
   function handleSignInBuyer(e){
     e.preventDefault()
@@ -219,7 +216,7 @@ console.log(sellerName)
           //set who signed in
           setSignedInBuyer(filteredBuyer)
           setBuyerState(true)
-          setBuyerName(filteredBuyer.name)
+          setBuyerName(filteredBuyer[0].name)
 
           //local storage of username
           localStorage.setItem("username", e.target.username.value);
@@ -261,7 +258,7 @@ console.log(sellerName)
           setSignInMsg("Success!")
           //set who signed in
           setSignedInSeller(filteredSeller)
-          setSellerName(filteredSeller.name)
+          setSellerName(filteredSeller[0].name)
           //set state of if signed in
           setSellerState(true)
           //local storage of username
