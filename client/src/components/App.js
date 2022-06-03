@@ -14,7 +14,6 @@ import AddListing from './AddListing'
 import ProductListing from './ProductListing';
 import MyPurchases from './MyPurchases';
 import ScrollToTop from './ScrollToTop'
-import { PropagateLoader } from 'react-spinners';
 
 
 function App() {
@@ -318,7 +317,7 @@ function App() {
       setUpdatedClicked(false)
   }
 
-  const productsToDisplay = allProducts.filter((product) => 
+  let productsToDisplay = allProducts.filter((product) => 
     product.name.toLowerCase().includes(searched.toLowerCase()) || product.description.toLowerCase().includes(searched.toLowerCase()) || product.artist.toLowerCase().includes(searched.toLowerCase()) ? true : false)
 
   //adding a new listing as a seller
@@ -500,7 +499,7 @@ function App() {
             <AddListing signedInSeller={signedInSeller} handleAddListing={handleAddListing}  />
           </Route>
           <Route path='/products/:id'>
-            <ProductListing allProducts={allProducts} allSellers={allSellers} signedInSeller={signedInSeller} signedInBuyer={signedInBuyer} handleDeleteItem={handleDeleteItem} handleUpdateItem={handleUpdateItem} handleBuyItem={handleBuyItem} handleUpdateSubmit={handleUpdateSubmit}
+            <ProductListing allProducts={productsToDisplay} allSellers={allSellers} signedInSeller={signedInSeller} signedInBuyer={signedInBuyer} handleDeleteItem={handleDeleteItem} handleUpdateItem={handleUpdateItem} handleBuyItem={handleBuyItem} handleUpdateSubmit={handleUpdateSubmit}
             updatedClicked={updatedClicked} sellerState={sellerState} buyerState={buyerState} 
             />
           </Route>

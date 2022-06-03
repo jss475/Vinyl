@@ -1,4 +1,6 @@
 import React from 'react'
+import vinyl from '../images/vinyl.jpg'
+
 
 function SignInBuyer({handleSignInBuyer, signInMsg}){
   document.querySelector("#myVideo").style.display = 'none';
@@ -6,7 +8,7 @@ function SignInBuyer({handleSignInBuyer, signInMsg}){
     return (
         <div id="sign_in_bg">
           <div className="loginbox">
-            <img className="avatar" />
+            <img className="avatar" src={vinyl} />
             <h3 id="sign_in_buyer_text">Please Sign In as a Buyer!</h3>
             <form id="sign_in_buyer_form" onSubmit={handleSignInBuyer}>
               <p>Username</p>

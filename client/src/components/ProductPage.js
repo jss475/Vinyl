@@ -2,7 +2,6 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, CardGroup, ListGroup } from 'react-bootstrap';
-import ProductListing from './ProductListing';
 
 function ProductPage({ product, handleProductClick }) {
     

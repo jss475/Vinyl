@@ -1,4 +1,5 @@
 import React from 'react'
+import vinyl from '../images/vinyl.jpg'
 
 function SignUpSeller({handleSignUpSeller, signInMsg}){
   document.querySelector("#myVideo").style.display = 'none';
@@ -6,7 +7,7 @@ function SignUpSeller({handleSignUpSeller, signInMsg}){
     return (
         <div id="sign_up_seller_bg">
           <div className="loginbox">
-            <img  className="avatar" /> {/* add src to image */}
+            <img  className="avatar" src={vinyl} /> {/* add src to image */}
             
             <h3 id="sign_up_seller_text">Please Sign Up as a Seller!</h3>
             <form id="sign_up_seller_form" onSubmit = {handleSignUpSeller}> 
