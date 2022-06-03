@@ -199,3 +199,118 @@ code {
   left: 20%;
   top: 50%;
 }
+
+/* /////////////// SIGN IN and SIGN UP */
+#sign_in_bg {
+  /* background-image: url('login.jpg'); */
+
+  height: 100vh;
+
+  background-position:center;
+  background-repeat: no-repeat;
+  background-size:cover;
+}
+
+#sign_up_bg {
+  /* background-image: url('signin2.jpg'); */
+
+  height: 100vh;
+
+  background-position:center;
+  background-repeat: no-repeat;
+  background-size:cover;
+}
+
+
+
+
+/* //////////////////////THIS IS FOR SIGN IN AND SIGN UP ONLY////////////////////// */
+.loginbox{
+  width: 320px;
+  height: 420px;
+  background: #000;
+  color: #fff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 70px 30px;
+}
+
+.avatar{
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  position: absolute;
+  top: -70px;
+  left: calc(50% - 60px);
+
+
+}
+
+#sign_in_buyer_text {
+  margin: 0;
+  padding: 0 0 20px;
+  text-align: center;
+  font-size: 22px;
+}
+
+#sign_in_seller_text {
+  margin: 0;
+  padding: 0 0 20px;
+  text-align: center;
+  font-size: 22px;
+}
+
+#sign_up_buyer_text {
+  margin: 0;
+  padding: 0 0 20px;
+  text-align: center;
+  font-size: 22px;
+}
+
+#sign_up_seller_text {
+  margin: 0;
+  padding: 0 0 20px;
+  text-align: center;
+  font-size: 22px;
+}
+
+.loginbox p{
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+.loginbox input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.loginbox input[type="username"], input[type="password"], input[type="name"] {
+  border: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  height: 40px;
+  color: #fff;
+  font-size: 16px; 
+}
+
+.loginbox button[type="submit"] {
+  border: none;
+  outline: none;
+  height: 40px;
+  background: #D92B4B;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 10px;
+}
+
+
+.loginbox button[type="submit"]:hover {
+  cursor: pointer;
+  background: #3906cf;
+  color: #000;
+}
