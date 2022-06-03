@@ -14,6 +14,8 @@ import AddListing from './AddListing'
 import ProductListing from './ProductListing';
 import MyPurchases from './MyPurchases';
 import ScrollToTop from './ScrollToTop'
+import { PropagateLoader } from 'react-spinners';
+
 
 function App() {
 
@@ -453,6 +455,7 @@ function App() {
 
     return (
       <>
+      
       {/* <div className='App'> */}
         <NavBar handleSearch={handleSearch} handleLogout={handleLogout} 
         signedInBuyer={signedInBuyer} 
@@ -491,7 +494,7 @@ function App() {
             <Products products={productsToDisplay} signedInBuyer={signedInBuyer} signedInSeller={signedInSeller} handleProductClick={handleProductClick}/>
           </Route>     
           <Route exact path = "/mylistings">
-            <MyListings products={productsToDisplay} signedInSeller={signedInSeller} handleProductClick={handleProductClick} addedPState={addedPState} />
+            <MyListings products={productsToDisplay} signedInSeller={signedInSeller} handleProductClick={handleProductClick} addedPState={addedPState} sellerName={sellerName}/>
           </Route>
           <Route exact path = "/addlisting">
             <AddListing signedInSeller={signedInSeller} handleAddListing={handleAddListing}  />

@@ -17,7 +17,7 @@ code {
 
 .grid {
   display: grid;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: stretch;
   grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
   grid-gap: 12px;

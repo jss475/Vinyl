@@ -2,7 +2,7 @@ import React,{useEffect} from 'react'
 import ProductPage from './ProductPage'
 import { Link } from 'react-router-dom';
 
-function MyListings({ products, signedInSeller, handleProductClick, addedPState }) {
+function MyListings({ products, signedInSeller, handleProductClick, addedPState, sellerName}) {
    let filteredProducts = []
 
     if (signedInSeller.length == true){
@@ -13,6 +13,8 @@ function MyListings({ products, signedInSeller, handleProductClick, addedPState 
     }
    
     return (
+        <>
+        <h2 style={{ marginLeft: '20px', marginTop: '50px'}}>Listings for {sellerName}:</h2>
         <div className='grid'>
             <div className='product-grid'>
             {filteredProducts.map((product) => {
@@ -24,6 +26,7 @@ function MyListings({ products, signedInSeller, handleProductClick, addedPState 
             })}
             </div>
         </div>
+        </>
     )
     
 }

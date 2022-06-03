@@ -36,7 +36,7 @@ function ProductListing({ allProducts, signedInSeller, signedInBuyer, handleDele
     </div>
     <div class="container-body mt-4">
         <div class="row r3">
-            <h5>Price: {productListing[0].price}</h5>
+            <h5>Price: ${productListing[0].price}</h5>
             {
             productListing[0].quantity > 0 ?
                  <h6>Quantity: {productListing[0].quantity}</h6>
@@ -55,6 +55,25 @@ function ProductListing({ allProducts, signedInSeller, signedInBuyer, handleDele
             <div class="col-md-7"> <img src={productListing[0].image} width="90%" height="95%"></img> </div>
         </div>
     </div>
+    {updatedClicked == true ? 
+            <div id="update_form_loc" style={{ marginTop: '10px'}}>
+                <form id="update_form" onSubmit={(e)=>handleUpdateSubmit(e,productListing[0].id)}>
+                    <p>Quantity</p>
+                    <input
+                        name="quantity"
+                        type="quantity"
+                        placeholder="Enter new quantity"
+                    />
+                    <p>Price</p>
+                    <input
+                        name="price"
+                        type="price"
+                        placeholder="Enter new price"
+                    />
+                    <button type="submit">Submit</button>
+                </form>
+                
+            </div> : null}
     <div class="footer d-flex flex-column mt-5">
         <div class="row r4">
         <h6>Sold by: {productListing[1].name}</h6>
@@ -76,25 +95,6 @@ function ProductListing({ allProducts, signedInSeller, signedInBuyer, handleDele
                     </> 
                 :null) :null
         }
-        {updatedClicked == true ? 
-            <div id="update_form_loc">
-                <form id="update_form" onSubmit={(e)=>handleUpdateSubmit(e,productListing[0].id)}>
-                    <p>Quantity</p>
-                    <input
-                        name="quantity"
-                        type="quantity"
-                        placeholder="Enter new quantity"
-                    />
-                    <p>Price</p>
-                    <input
-                        name="price"
-                        type="price"
-                        placeholder="Enter new price"
-                    />
-                    <button type="submit">Submit</button>
-                </form>
-                
-            </div> : null}
             {
             buyerState == true && signedInBuyer.id != productListing[0].buyer_id && productListing[0].quantity > 0? 
                     <>
