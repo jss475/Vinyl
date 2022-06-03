@@ -9,7 +9,7 @@ function NavBar( { handleSearch, handleLogout, signedInBuyer, signedInSeller, se
 
     return (
     <>
-    <Navbar variant="dark" bg="dark">
+    <Navbar variant="dark" bg="dark" >
         <Container>
             {
             buyerName.length > 0 ?

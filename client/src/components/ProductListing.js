@@ -31,7 +31,7 @@ function ProductListing({ allProducts, signedInSeller, signedInBuyer, handleDele
                 <h1>{productListing[0].name}</h1>
             </div>
             <div class="col-md-3 text-right pqr"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
-            <p class="text-right para"></p>
+            <h4 class="text-right para" style={{paddingTop: '10px'}}>{productListing[0].artist}</h4>
         </div>
     </div>
     <div class="container-body mt-4">
@@ -110,85 +110,10 @@ function ProductListing({ allProducts, signedInSeller, signedInBuyer, handleDele
                 : null
         }
         </div>
+        </div>
     </div>
-</div>
-</>
-
-
-        
-        
-        // <>
-        // <div className='product-container'>
-        //     <img className="listing-image" src={productListing[0].image}></img>
-        // <div className='product-listing-info'>
-        //     <h2>{productListing[0].name}</h2>
-        //     <p>Price: ${productListing[0].price}</p>
-        // {
-        //     productListing[0].quantity > 0 ?
-        //         <p>Quantity: {productListing[0].quantity}</p>
-        //     : productListing[0].quantity <= 0 ?
-        //         <p>Out of Stock</p> : null
-        // }
-        //     <p>Sold by: {productListing[1].name}</p>
-        //     </div>
-        //             </div>
-        //             <div className='description'>
-        //                 <p>{productListing[0].description}</p>
-        //             </div>
-
-        // {
-        //     signedInSeller.length > 0 == true ? 
-        //         (signedInSeller[0].id == productListing[0].seller_id ?
-        //             <>
-        //                 <button onClick={() => handleDeleteItem(productListing[0].id)}>Delete</button>
-        //                 <button onClick={() => handleUpdateItem()}>Update</button>
-        //             </> 
-        //         :null) :null
-        // }
-        //  {
-        //     sellerState == true ? 
-        //         (signedInSeller.id == productListing[0].seller_id ?
-        //             <>
-        //                 <button onClick={() => handleDeleteItem(productListing[0].id)}>Delete</button>
-        //                 <button onClick={() => handleUpdateItem()}>Update</button>
-        //             </> 
-        //         :null) :null
-        // }
-        // {updatedClicked == true ? 
-        //     <div id="update_form_loc">
-        //         <form id="update_form" onSubmit={(e)=>handleUpdateSubmit(e,productListing[0].id)}>
-        //             <p>Quantity</p>
-        //             <input
-        //                 name="quantity"
-        //                 type="quantity"
-        //                 placeholder="Enter new quantity"
-        //             />
-        //             <p>Price</p>
-        //             <input
-        //                 name="price"
-        //                 type="price"
-        //                 placeholder="Enter new price"
-        //             />
-        //             <button type="submit">Submit</button>
-        //         </form>
-                
-        //     </div> : null}
-        //     {
-        //     buyerState == true && signedInBuyer.id != productListing[0].buyer_id && productListing[0].quantity > 0? 
-        //             <>
-        //                 <button onClick={() => handleBuyItem(productListing[0].id)}>Purchase</button>
-        //             </> 
-        //      : buyerState == true && signedInBuyer.id == productListing[0].buyer_id && productListing[0].quantity > 0 ?
-        //         <>
-        //             <button onClick={() => handleBuyItem(productListing[0].id)}>Buy again?</button>
-        //         </>
-        //         : productListing[0].quantity <= 0 ?
-        //         <>
-        //         </>
-        //         : null
-        // }
-        // </>
-    )}
+    </>
+ )}
 }
 
 export default ProductListing;

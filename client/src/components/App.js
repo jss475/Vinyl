@@ -316,8 +316,8 @@ function App() {
       setUpdatedClicked(false)
   }
 
-    const productsToDisplay = allProducts.filter((product) => 
-      product.name.toLowerCase().includes(searched.toLowerCase()) || product.description.toLowerCase().includes(searched.toLowerCase()) ? true : false)
+  const productsToDisplay = allProducts.filter((product) => 
+    product.name.toLowerCase().includes(searched.toLowerCase()) || product.description.toLowerCase().includes(searched.toLowerCase()) || product.artist.toLowerCase().includes(searched.toLowerCase()) ? true : false)
 
   //adding a new listing as a seller
   function handleAddListing(e){
@@ -340,6 +340,7 @@ function App() {
         },
         body: JSON.stringify({
             name: e.target.name.value,
+            artist: e.target.artist.value,
             price: e.target.price.value,
             quantity: e.target.quantity.value,
             description: e.target.description.value,

@@ -1,9 +1,9 @@
 import React from 'react'
-
 function AddListing({handleAddListing}){
 
     return (
         <>
+        <div className='background-grad'>
             <h3 id="add_listing_text">Add a Listing!</h3>
             <form id="add_listing_form" onSubmit = {handleAddListing}> 
               <p>Name</p>
@@ -11,6 +11,12 @@ function AddListing({handleAddListing}){
                 name="name"
                 type="name"
                 placeholder="Enter name of item"
+              />
+              <p>Artist</p>
+              <input
+                name="artist"
+                type="artist"
+                placeholder="Enter artist of item"
               />
               <p>Price</p>
               <input
@@ -39,6 +45,7 @@ function AddListing({handleAddListing}){
 
               <button type="submit">Submit</button>
               </form>
+              </div>
         </>
     )
 }

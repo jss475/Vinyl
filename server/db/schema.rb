@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2022_06_01_140741) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
+    t.string "artist"
     t.integer "seller_id"
     t.integer "buyer_id"
     t.float "price"

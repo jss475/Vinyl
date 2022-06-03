@@ -2,6 +2,7 @@ class CreateProducts < ActiveRecord::Migration[6.1]
   def change
     create_table :products do |t|
       t.string :name
+      t.string :artist
       t.integer :seller_id
       t.integer :buyer_id
       t.float :price

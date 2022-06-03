@@ -1,3 +1,6 @@
+#root {
+  background-image: linear-gradient(to bottom, rgb(223, 136, 136) -20%, rgba(255,0,0,0) 20% );
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -14,12 +17,15 @@ code {
 
 .grid {
   display: grid;
+  justify-content: space-between;
+  align-items: stretch;
   grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
   grid-gap: 12px;
   height: auto;
   margin-left: 50px;
+  margin-right: 50px;
   width: auto;
-  padding: 1rem 3rem;
+  padding: 1rem 4rem;
 }
 
 .product-grid {
@@ -143,10 +149,6 @@ code {
   color: black; 
 }
 
-#root{
-  background-image: linear-gradient(to bottom, rgb(223, 136, 136) -20%, rgba(255,0,0,0) 20% );
-}
-
 /*  */
 .top-to-btm{
   position: relative;
@@ -228,14 +230,17 @@ code {
 .loginbox{
   width: 320px;
   height: 420px;
-  background: #000;
-  color: #fff;
+  background: rgb(255, 255, 255);
+  color: rgb(3, 3, 3);
   top: 50%;
   left: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
   box-sizing: border-box;
   padding: 70px 30px;
+  border-radius: 20px;
+  border-color: #000;
+  border-width: 1px;
 }
 
 .avatar{
@@ -290,11 +295,11 @@ code {
 
 .loginbox input[type="username"], input[type="password"], input[type="name"] {
   border: none;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid rgb(100, 92, 92);
   background: transparent;
   outline: none;
   height: 40px;
-  color: #fff;
+  color: rgb(1, 1, 1);
   font-size: 16px; 
 }
 
@@ -311,6 +316,41 @@ code {
 
 .loginbox button[type="submit"]:hover {
   cursor: pointer;
-  background: #3906cf;
+  background: #93909a;
   color: #000;
+}
+
+.limit-text {
+  color: #000;
+  font-size: small;
+}
+
+#add_listing_form {
+  width: 320px;
+  height: 420px;
+  background: rgb(255, 252, 252);
+  color: rgb(3, 3, 3);
+  top: 50%;
+  left: 20%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 70px 30px;
+  border-radius: 20px;
+  border-color: #000;
+  padding: 15px;
+  border-width: 1px;
+}
+
+#add_listing_text {
+  position: fixed;
+  top: 15%;
+  left: 10%
+}
+input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid black;
+  /* padding: 10px */
 }

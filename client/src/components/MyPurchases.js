@@ -16,7 +16,7 @@ function MyPurchases({ products, signedInBuyer, handleProductClick }) {
             <div className='product-grid'>
             {filteredProducts.map((product) => {
                 return (
-                <Link to={`/products/${product.id}`}>
+                <Link  style={{ textDecoration: 'none' }} to={`/products/${product.id}`}>
                     <ProductPage key={product.id} product={product} handleProductClick={handleProductClick} />
                 </Link>
                 )  

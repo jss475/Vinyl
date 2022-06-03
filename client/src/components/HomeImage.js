@@ -1,6 +1,5 @@
 import React from 'react';
 import { Parallax } from 'react-parallax';
-import mountain from '../images/mountain.jpg'
 
 const HomeImage = () => (
         <Parallax  className='image'
