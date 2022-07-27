@@ -2,5 +2,12 @@
   "dependencies": {
     "react-icons": "^4.4.0",
     "react-router-dom": "^5.1.2"
+  },
+  "scripts": {
+    "build": "npm install --prefix client && npm run build --prefix client",
+    "clean": "rm -rf public",
+    "deploy": "cp -a client/build/. public/",
+    "heroku-postbuild": "npm run clean && npm run build && npm run deploy & npm run start",
+    "start": "node app.js"
   }
 }
