@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_01_140741) do
+ActiveRecord::Schema.define(version: 2022_08_02_145015) do
+
+  create_table "buyer_products", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "buyer_id"
+    t.integer "quantity", default: 0
+  end
 
   create_table "buyers", force: :cascade do |t|
     t.string "name"

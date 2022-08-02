@@ -79,5 +79,60 @@ class ApplicationController < Sinatra::Base
         new_buyer.to_json
     end
 
+    get '/buyer_products' do
+        bp = BuyerProduct.all
+        if bp
+            bp.to_json
+        end
+    end
+
+    post '/buyer_products/find' do
+        buyer_id = params[:buyer_id]
+        product_id = params[:product_id]
+        bp_find = BuyerProduct.find_by buyer_id: buyer_id, product_id: product_id
+        bp_find.to_json
+    end
+
+    post '/buyer_products' do
+        buyer_id = params[:buyer_id]
+        product_id = params[:product_id]
+        bp_find = BuyerProduct.find_by buyer_id: buyer_id, product_id: product_id
+        if bp_find
+            bp_find.update(
+                quantity: bp_find.quantity + 1
+            )
+            bp = bp_find
+        else
+            bp = BuyerProduct.create(
+                product_id: params[:product_id],
+                buyer_id: params[:buyer_id],
+                quantity: 1
+            )
+        end
+        # new_buyerproduct = BuyerProduct.create(
+        #     product_id: params[:product_id],
+        #     buyer_id: params[:buyer_id],
+        #     quantity: params[:quantity]
+        # )
+        bp.to_json
+    end
+
+
+
+    patch '/buyer_products' do
+        bp = BuyerProduct.find(params[:id])
+        bp.update(quantity: params[:quantity])
+    end
+
+    private 
+
+
+    def bp_find
+        buyer_id = params[:buyer_id]
+        product_id = params[:product_id]
+        bp_find = BuyerProducts.find_by buyer_id: buyer_id, product_id: product_id
+        return bp_find
+    end
+
 end
   

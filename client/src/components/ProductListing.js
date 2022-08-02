@@ -4,16 +4,38 @@ import { useParams } from 'react-router-dom';
 function ProductListing({ allProducts, signedInSeller, signedInBuyer, handleDeleteItem, handleUpdateSubmit, handleUpdateItem, handleBuyItem, updatedClicked, sellerState, buyerState }) {
     const { id } = useParams()
     const [productListing, setProductListing] = useState([])
-
+    const [bp, setBp] = useState()
+    //get the product data
     function getProductListingFetch() {
         fetch(`http://localhost:9292/products/${id}`)
         .then(res => res.json())
         .then(data => setProductListing(data))
     }
 
+    //get the buyer_product data
+
+    let configObjBP = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            buyer_id: signedInBuyer[0].id,
+            product_id: id
+        })
+    }
+    function getBuyerProductData() {
+        fetch(`http://localhost:9292/buyer_products/find`,configObjBP)
+            .then(res => res.json())
+            .then(data => setBp(data))
+    }
+
     useEffect(() => {
         getProductListingFetch();
+        getBuyerProductData()
     }, [allProducts])
+
+    console.log(bp)
     
     if (productListing.length < 1) {
         return (
@@ -42,6 +64,10 @@ function ProductListing({ allProducts, signedInSeller, signedInBuyer, handleDele
                  <h6>Quantity: {productListing[0].quantity}</h6>
              : productListing[0].quantity <= 0 ?
                  <h6>Out of Stock</h6> : null
+            }
+        
+            {
+                bp ? <h6>Quantity Bought: {bp.quantity}</h6> : null
             }
             <div class="col-md-5 p-0 klo">
                 <ul>

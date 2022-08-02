@@ -374,6 +374,23 @@ function App() {
 
       let { quantity, price, id } = boughtItem[0]
 
+      //send post request for buyer_product table
+      let configObj = {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          buyer_id: buyerId,
+          product_id: id
+        })
+      }
+      fetch('http://localhost:9292/buyer_products',configObj)
+        .then(res => res.json())
+        .then(data => console.log(data))
+
+
+      //patch the product quantity
       let quantityUpdate = {
         method: "PATCH",
         headers: {
