@@ -1,9 +1,11 @@
 import React from 'react'
+import {Button, InputGroup} from 'react-bootstrap'
+import '../add-listing.css'
 function AddListing({handleAddListing}){
 
     return (
         <>
-        <div className='background-grad'>
+        <div className='add_listing_bg'>
             <h3 id="add_listing_text">Add a Listing!</h3>
             <form id="add_listing_form" onSubmit = {handleAddListing}> 
               <p>Name</p>
@@ -42,9 +44,10 @@ function AddListing({handleAddListing}){
                 type="image_descrip"
                 placeholder="Enter image of item"
               />
-
-              <button type="submit">Submit</button>
+              <Button type="submit">Submit</Button>
+              
               </form>
+              
               </div>
         </>
     )

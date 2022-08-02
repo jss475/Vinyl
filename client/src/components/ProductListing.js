@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 function ProductListing({ allProducts, signedInSeller, signedInBuyer, handleDeleteItem, handleUpdateSubmit, handleUpdateItem, handleBuyItem, updatedClicked, sellerState, buyerState }) {
+    
     const { id } = useParams()
     const [productListing, setProductListing] = useState([])
     const [bp, setBp] = useState()
@@ -12,18 +13,24 @@ function ProductListing({ allProducts, signedInSeller, signedInBuyer, handleDele
         .then(data => setProductListing(data))
     }
 
+    let configObjBP
+    console.log(signedInBuyer)
     //get the buyer_product data
-
-    let configObjBP = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            buyer_id: signedInBuyer[0].id,
-            product_id: id
-        })
+    if(signedInBuyer.length > 0){
+        configObjBP = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                buyer_id: signedInBuyer[0].id,
+                product_id: id
+            })
+        } 
     }
+
+    
+
     function getBuyerProductData() {
         fetch(`http://localhost:9292/buyer_products/find`,configObjBP)
             .then(res => res.json())
@@ -32,7 +39,10 @@ function ProductListing({ allProducts, signedInSeller, signedInBuyer, handleDele
 
     useEffect(() => {
         getProductListingFetch();
-        getBuyerProductData()
+        if(signedInBuyer.length > 0){
+            getBuyerProductData()
+        }
+       
     }, [allProducts])
 
     console.log(bp)
